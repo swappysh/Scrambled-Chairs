@@ -561,6 +561,7 @@ function gameInfo() {
   infoBoard.insertBefore(get_info_row(instructionLabel, "<b>" + "Set up the game by scrambling the chairs" + "</b>", player2Name + "'s turn:"), nameDiv);
   infoBoard.insertBefore(get_info_row(movesLabel, 0), nameDiv);
   infoBoard.insertBefore(get_info_row(scrambleLeftLabel, d), nameDiv);
+  infoBoard.insertBefore(get_info_row(distanceLabel, k[0] + ", " + k[1]), nameDiv);
   infoBoard.insertBefore(get_info_row(player1Name + " " + scoreLabel, player1Score), nameDiv);
   if (no_of_players == 2) {
     infoBoard.insertBefore(get_info_row(player2Name + " " + scoreLabel, player2Score), nameDiv);
@@ -1021,6 +1022,7 @@ const defaultK = [2, 0];
 const scrambleLeftLabel = "Scrambles left: ";
 const movesLabel = "Moves: ", instructionLabel = "Instructions: ";
 const scoreLabel = "Score: ";
+const distanceLabel = "Distance: ";
 
 var var1, k = defaultK, solved = false, scrambleCount = 3;
 var d = 3, player1Score = 0, player2Score = 0, counter=0;
