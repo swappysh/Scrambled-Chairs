@@ -558,7 +558,7 @@ function gameInfo() {
   document.getElementById("player-1").innerHTML = null;
 
   nameDiv = document.getElementById('player1-name');
-  infoBoard.insertBefore(get_info_row(instructionLabel, "<b>" + "Set up the game by scrambling the chairs" + "</b>", player2Name + "'s turn:"), nameDiv);
+  infoBoard.insertBefore(get_info_row(instructionLabel, "<b>" + "Set up the game by scrambling the chairs" + "</b>", player2Name + "'s Turn:"), nameDiv);
   infoBoard.insertBefore(get_info_row(movesLabel, 0), nameDiv);
   infoBoard.insertBefore(get_info_row(scrambleLeftLabel, d), nameDiv);
   infoBoard.insertBefore(get_info_row(distanceLabel, k[0] + ", " + k[1]), nameDiv);
@@ -1019,7 +1019,7 @@ function getUnion(setA, setB) {
 
 // Default script runs
 const defaultK = [2, 0];
-const scrambleLeftLabel = "Scrambles left: ";
+const scrambleLeftLabel = "Scrambles Left: ";
 const movesLabel = "Moves: ", instructionLabel = "Instructions: ";
 const scoreLabel = "Score: ";
 const distanceLabel = "Distance: ";
