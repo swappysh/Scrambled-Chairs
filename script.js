@@ -812,7 +812,7 @@ function isEmpty(str) {
 }
 
 function InitInfoBoard() {
-  var1 = null, k = defaultK, solved = false, d = 3, player1Score = 0, player2Score = 0;
+  var1 = null, k = structuredClone(defaultK), solved = false, d = 3, player1Score = 0, player2Score = 0;
   N = 5, no_of_players=2, player1Turn = true;
   player1Name = "Bread", player2Name = "Butter";
   all_poss_set=null;
@@ -820,6 +820,7 @@ function InitInfoBoard() {
   counter=0;
   secondRound=false;
 
+  console.log("new k: ", k, defaultK)
   const infoBoard = document.getElementById('info-board');
   infoBoard.innerHTML = "";
   getInitGameInfoHTML().forEach(element => {
@@ -1024,7 +1025,7 @@ const movesLabel = "Moves: ", instructionLabel = "Instructions: ";
 const scoreLabel = "Score: ";
 const distanceLabel = "Distance: ";
 
-var var1, k = defaultK, solved = false, scrambleCount = 3;
+var var1, k = structuredClone(defaultK), solved = false, scrambleCount = 3;
 var d = 3, player1Score = 0, player2Score = 0, counter=0;
 var N = 5, no_of_players=2, player1Turn = true;
 var player1Name = "Bread", player2Name = "Butter";
