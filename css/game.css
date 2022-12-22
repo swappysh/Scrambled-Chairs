@@ -1,0 +1,36 @@
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: orange;
+  
+  /* Add the blur effect */
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
+
+.active-circle {
+  filter: none;
+  -webkit-filter: none;
+}
+
+.active-circle:hover {
+  box-shadow: 0 0 3px;
+}
+
+.active-circle:active {
+  background: #ee8833;
+}
+
+.valid-circle {
+  background: green;
+}
+
+.selected-circle {
+  filter: none;
+  -webkit-filter: none;
+  background: #ee8833;
+}
