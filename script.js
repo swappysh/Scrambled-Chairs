@@ -512,10 +512,16 @@ function newGame(){
       player2Name = document.getElementById('player-2').value;
     }
 
-    width = document.getElementById('swap-width');
-    if (!isEmpty(width.value)) { 
-      // console.log(width.value);
-      k[0] = Number(width.value);
+    width1 = document.getElementById('swap-width1');
+    if (!isEmpty(width1.value)) { 
+      console.log(width1.value);
+      k[0] = Number(width1.value);
+    }
+
+    width2 = document.getElementById('swap-width2');
+    if (!isEmpty(width2.value)) { 
+      console.log(width2.value);
+      k[1] = Number(width2.value);
     }
 
     chairCount = document.getElementById('chair-count');
@@ -612,19 +618,39 @@ function getInitGameInfoHTML() {
   // Swap width
   var swapWidthContainer = document.createElement("div");
   swapWidthContainer.id = "swap-width-container";
-  swapWidthContainer.className = "form-group";
+  swapWidthContainer.classList.add('form-group', 'row');
+
+  var widthCol1 = document.createElement("div");
+  widthCol1.className = "col";
   
   var label2 = document.createElement("label");
-  label2.setAttribute("for", "swap-width");
-  label2.innerHTML = " Distance ";
-  swapWidthContainer.appendChild(label2);
+  label2.setAttribute("for", "swap-width1");
+  label2.innerHTML = " Distance 1 ";
+  widthCol1.appendChild(label2);
 
   var input2 = document.createElement("input");
   input2.setAttribute("type", "text");
   input2.setAttribute("class", "form-control");
   input2.setAttribute("placeholder", "2");
-  input2.id = "swap-width";
-  swapWidthContainer.appendChild(input2);
+  input2.id = "swap-width1";
+  widthCol1.appendChild(input2)
+  swapWidthContainer.appendChild(widthCol1);
+
+  var widthCol2 = document.createElement("div");
+  widthCol2.className = "col";
+  
+  var label2_width2 = document.createElement("label");
+  label2_width2.setAttribute("for", "swap-width2");
+  label2_width2.innerHTML = " Distance 2 ";
+  widthCol2.appendChild(label2_width2);
+
+  var input2_width2 = document.createElement("input");
+  input2_width2.setAttribute("type", "text");
+  input2_width2.setAttribute("class", "form-control");
+  input2_width2.setAttribute("placeholder", "0");
+  input2_width2.id = "swap-width2";
+  widthCol2.appendChild(input2_width2);
+  swapWidthContainer.appendChild(widthCol2);
 
   // Number of chairs
   var chairContainer = document.createElement("div");
