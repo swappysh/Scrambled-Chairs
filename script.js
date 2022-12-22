@@ -11,6 +11,7 @@ function setBoard(N) {
   var game_board = document.getElementById('game-board');
   game_board.innerHTML = "";
 
+  // console.log("setting board")
   const empty_placeholder = '_';
   var values = [empty_placeholder];
   for (let index = 0; index < N - 1; index++) {
@@ -22,7 +23,7 @@ function setBoard(N) {
   //   .map(value => ({ value, sort: Math.random() }))
   //   .sort((a, b) => a.sort - b.sort)
   //   .map(({ value }) => value);
-  all_poss_set = gen_all_swaps(values, Number(k));
+  all_poss_set = gen_all_swaps(values, k);
   all_possible = Array.from(all_poss_set);
   if (no_of_players == 2) {
     game_started = false
@@ -31,6 +32,7 @@ function setBoard(N) {
     values = item.split(',');
   }
 
+  // console.log("setting board 2")
   for (let index = 0; index < N; index++) {
     const div = document.createElement("div");
     div.id = index;
@@ -50,7 +52,7 @@ function setBoard(N) {
   if (no_of_players == 2) {
     startBtn = document.getElementById('start-button');
     startBtn.classList.remove('d-none');
-    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
+    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
 
     // moves = new Set();
     // for(let key of move_map[0].keys()) {
@@ -83,7 +85,7 @@ function arrangeInCircles(N) {
     x = radius * Math.cos(angle) + 300;
     y = radius * Math.sin(angle) + 300;
     elem.style.position = 'absolute';
-    console.log("x", x)
+    // console.log("x", x)
     elem.style.left = x + 'px';
     elem.style.top = y + 'px';
     angle += increase;
@@ -125,7 +127,7 @@ function player1Move(param) {
   var var2 = document.getElementById(param);
   // console.log(var2, Math.abs(var1.id - var2.id), N-Math.abs(var1.id - var2.id));
 
-  if (Math.abs(var1.id - var2.id) != k && N - Math.abs(var1.id - var2.id) != k) {
+  if (isInValidSwap(var1.id, var2.id)) {
     var1.classList.remove('selected-circle');
     var1 = null;
     return;
@@ -153,14 +155,14 @@ function player1Move(param) {
   if (solved) {
     declareWinner();
   } else if (d > 0) {
-    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
+    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
     moves = new Set();
     for(let key of move_map[0].keys()) {
-      console.log(typeof moves)
+      // console.log(typeof moves)
         moves.add(key)
     }
 
-    console.log("moves", moves)
+    // console.log("moves", moves)
     
     for (node of current_state(true, true)) {
       if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
@@ -185,7 +187,7 @@ function player2Move(param) {
     var1 = document.getElementById(param);
     var1.classList.add('selected-circle');
 
-    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
+    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
     if (var1.children.length == 0) {
       moves = move_map[0].get('_')
     } else {
@@ -205,7 +207,7 @@ function player2Move(param) {
   if (document.getElementById(param) == var1) {
     var1.classList.remove('selected-circle');
     var1 = null;
-    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
+    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
     moves = new Set();
     for(let key of move_map[0].keys()) {
         moves.add(key)
@@ -333,6 +335,12 @@ function player2Move(param) {
 //   }
 // }
 
+function isInValidSwap(id1, id2) {
+  firstCheck = Math.abs(id1 - id2) != k[0] && N - Math.abs(id1 - id2) != k[0]
+  secondCheck = Math.abs(id1 - id2) != k[1] && N - Math.abs(id1 - id2) != k[1]
+  return firstCheck && secondCheck
+}
+
 function settingUpBoard(param) {
   if (var1 == null) {
     var1 = document.getElementById(param);
@@ -342,7 +350,7 @@ function settingUpBoard(param) {
 
   var var2 = document.getElementById(param);
 
-  if (Math.abs(var1.id - var2.id) != k && N - Math.abs(var1.id - var2.id) != k) {
+  if (isInValidSwap(var1.id, var2.id)) {
     var1.classList.remove('selected-circle');
     var1 = null;
     return;
@@ -459,7 +467,7 @@ function change_turn() {
 }
 
 function consecutive(arr){
-  console.log(arr);
+  // console.log(arr);
   let second_index;
   var sign_changed_once = false;
   for(let first_index = 0; first_index < arr.length - 1; first_index++){
@@ -506,23 +514,24 @@ function newGame(){
 
     width = document.getElementById('swap-width');
     if (!isEmpty(width.value)) { 
-      console.log(width.value);
-      k = Number(width.value);
+      // console.log(width.value);
+      k[0] = Number(width.value);
     }
 
     chairCount = document.getElementById('chair-count');
     if (!isEmpty(chairCount.value)) { 
-      console.log(chairCount.value);
+      // console.log(chairCount.value);
       N = Number(chairCount.value);
     }
 
     distruptionCount = document.getElementById('scramble-count');
     if (!isEmpty(distruptionCount.value)) { 
-      console.log(distruptionCount.value);
+      // console.log(distruptionCount.value);
       d = Number(distruptionCount.value);
       scrambleCount = d;
     }
     
+    // console.log("New Game Clicked")
     // New layout of game
     gameInfo();
     setBoard(N);
@@ -552,6 +561,7 @@ function gameInfo() {
     name2Div = document.getElementById('player2-name');
     name2Div.innerHTML = "<p id='player2-name-value'>" + player2Name + " waiting </p>";
   }
+  // console.log("Game Info generated")
 }
 
 function updateScore(player, score) {
@@ -722,13 +732,14 @@ function getInitGameInfoHTML() {
 function nextRound() {
   if (!secondRound) {
     secondRound = true
-    var1 = null, k = 2, solved = false, d = scrambleCount;
+    // TODO: Need to set k to the form filled values
+    var1 = null, k = defaultK, solved = false, d = scrambleCount;
     N = 5, no_of_players=2, player1Turn = true;
 
     temp = player1Name;
     player1Name = player2Name, player2Name = temp;
 
-    console.log("scores: ", player1Score, " ", player2Score)
+    // console.log("scores: ", player1Score, " ", player2Score)
     player2Score = player1Score;
     player1Score = 0;
 
@@ -774,7 +785,7 @@ function isEmpty(str) {
 }
 
 function InitInfoBoard() {
-  var1 = null, k = 2, solved = false, d = 3, player1Score = 0, player2Score = 0;
+  var1 = null, k = defaultK, solved = false, d = 3, player1Score = 0, player2Score = 0;
   N = 5, no_of_players=2, player1Turn = true;
   player1Name = "Bread", player2Name = "Butter";
   all_poss_set=null;
@@ -803,10 +814,15 @@ function rephrase(arr, random=false) {
     }
     i++;
   }
+  // console.log("rephrased ", arr, " to ", new_arr)
   return new_arr;
 }
 
 function right_swap(arr, k=2) {
+  if(k == 0) {
+    return arr;
+  }
+
   var new_arr = []
   var i = 0
   while(true) {
@@ -817,38 +833,61 @@ function right_swap(arr, k=2) {
         index = i - index
         i = i - index
       }
+      // console.log("locations to swap: ", i, index)
       new_arr = arr.slice(0, i).concat(arr[index], arr.slice(i+1, index), arr[i], arr.slice(index+1))
       break;
     }
     i++;
   }
+  // console.log("right swapped ", arr, " to ", new_arr)
   return new_arr;
 }
 
-function gen_all_right_swaps(arr, k=2, drop=false) {
-  const my_set = new Set()
-  var new_state = right_swap(arr, k)
-  while(new_state.join() != arr.join()) {
+function gen_all_right_swaps_recursive(my_set, arr, k, drop=false) {
+  var new_state1 = right_swap(arr, k[0]);
+  var new_state2 = right_swap(arr, k[1]);
+
+  if (new_state1.join() != arr.join()) {
     if (drop) {
-        my_set.add(arrayRemove(rephrase(new_state), '_').join());
+        val = arrayRemove(rephrase(new_state1), '_').join();
     } else {
-        my_set.add(rephrase(new_state).join());
+        val = rephrase(new_state1).join();
     }
-    new_state = right_swap(new_state, k)
+    // console.log("considering ", val)
+    // console.log(typeof my_set)
+    if (!my_set.has(val)) {
+      // console.log("adding ", val)
+      my_set.add(val);
+      gen_all_right_swaps_recursive(my_set, arr, k, drop=false)
+    }
   }
-  return my_set;
+
+  if (new_state2.join() != arr.join()) {
+    if (drop) {
+      val = arrayRemove(rephrase(new_state2), '_').join();
+    } else {
+        val = rephrase(new_state2).join();
+    }
+    // console.log("2 considering ", val)
+    // console.log("2 ", typeof my_set)
+    if (!my_set.has(val)) {
+      // console.log("2 adding ", val)
+      my_set.add(val);
+      gen_all_right_swaps_recursive(my_set, arr, k, drop=false)
+    }
+  }
 }
 
-function gen_all_swaps(arr, k = 2, drop=false) {
+function gen_all_swaps(arr, k = defaultK, drop=false) {
     arr = arrayRemove(arr, '_')
     var my_set = new Set()
     for (let i = 0; i < arr.length; i++) {
-        my_set = getUnion(my_set, gen_all_right_swaps(arr.slice(0, i).concat('_', arr.slice(i)), k, drop))
+        gen_all_right_swaps_recursive(my_set, arr.slice(0, i).concat('_', arr.slice(i)), k, drop)
     }
     return my_set;
 }
 
-function is_adversary_move(arr, move, k=2) {
+function is_adversary_move(arr, move, k=defaultK) {
   if (move == arr.join()) {
       return null
   }
@@ -858,20 +897,19 @@ function is_adversary_move(arr, move, k=2) {
     return null
   }
 
-// console.log("first_loop", arr, move)
   invalid = false;
   var first_miss_index = -1, sec_miss_index = -1;
   for (let i = 0; i < move.length; i++) {
     if (move[i] != arr[i]) {
       if (first_miss_index == -1) {
         first_miss_index = i
-      } else if (sec_miss_index != -1 ||
-      (i - first_miss_index != k && move.length + first_miss_index - i != k)) {
-        //   console.log("first loop", i, first_miss_index, move.length, sec_miss_index)
-          invalid = true;
-          break;
+      } else if (sec_miss_index != -1 || isInValidSwap(i, first_miss_index, k)) {
+        // TODO: Need to check isInValidSwap validity
+        // Math.abs(id1 - id2) != k[0] && N - Math.abs(id1 - id2) != k[0]
+        invalid = true;
+        break;
       } else {
-          sec_miss_index = i;
+        sec_miss_index = i;
       }
     }
   }
@@ -889,8 +927,7 @@ function is_adversary_move(arr, move, k=2) {
         //   console.log("second_loop", move[i], arr[i])
         if (first_miss_index == -1) {
           first_miss_index = i
-        } else if (sec_miss_index != -1 ||
-        (i - first_miss_index != k && move.length + first_miss_index - i != k)) {
+        } else if (sec_miss_index != -1 || isInValidSwap(i, first_miss_index, k)) {
             // console.log("second loop", i, first_miss_index, move.length)
             invalid = true;
             break;
@@ -909,7 +946,7 @@ function is_adversary_move(arr, move, k=2) {
   return [true, arr[first_miss_index], arr[sec_miss_index]]
 }
 
-function gen_adversarial_moves(arr, all_valid_states, k=2) {
+function gen_adversarial_moves(arr, all_valid_states, k=defaultK) {
   arr = rephrase(arr)
   moves = new Map();
   count = 0
@@ -953,14 +990,17 @@ function getUnion(setA, setB) {
 }
 
 // Default script runs
-var var1, k = 2, solved = false, scrambleCount = 3;
-var d = 3, player1Score = 0, player2Score = 0, counter=0;
-var N = 5, no_of_players=2, player1Turn = true;
-var player1Name = "Bread", player2Name = "Butter";
+const defaultK = [2, 0];
 const scrambleLeftLabel = "Scrambles left: ";
 const movesLabel = "Moves: ", instructionLabel = "Instructions: ";
 const scoreLabel = "Score: ";
+
+var var1, k = defaultK, solved = false, scrambleCount = 3;
+var d = 3, player1Score = 0, player2Score = 0, counter=0;
+var N = 5, no_of_players=2, player1Turn = true;
+var player1Name = "Bread", player2Name = "Butter";
 var all_poss_set=null;
 var game_started=true;
 var secondRound=false;
+
 InitInfoBoard();
