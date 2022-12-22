@@ -761,9 +761,7 @@ function nextRound() {
     console.log("next round starting")
 
     // TODO: Need to set k to the form filled values
-    var1 = null, k = defaultK, solved = false, d = scrambleCount;
-    N = 5, no_of_players=2, player1Turn = true;
-
+    var1 = null, solved = false, d = scrambleCount, player1Turn = true;
     temp = player1Name;
     player1Name = player2Name, player2Name = temp;
 
