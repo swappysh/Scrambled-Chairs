@@ -758,6 +758,8 @@ function getInitGameInfoHTML() {
 function nextRound() {
   if (!secondRound) {
     secondRound = true
+    console.log("next round starting")
+
     // TODO: Need to set k to the form filled values
     var1 = null, k = defaultK, solved = false, d = scrambleCount;
     N = 5, no_of_players=2, player1Turn = true;
@@ -817,6 +819,7 @@ function InitInfoBoard() {
   all_poss_set=null;
   game_started=true;
   counter=0;
+  secondRound=false;
 
   const infoBoard = document.getElementById('info-board');
   infoBoard.innerHTML = "";
