@@ -388,11 +388,11 @@ function swap(param) {
     if (solved) {
       updateInstructions(player1Name, key=true);
       if (secondRound) {
-        updateInstructions("Chairs in clockwise sorted order!!"+
-        "</br>Press 'Results'.")
+        updateInstructions("You did it! The chairs are sorted."+
+        "</br>Click 'Results' to see who won!")
       } else {
-        updateInstructions("Chairs in clockwise sorted order!!"
-        +"</br>Press 'Next Round' to swap positions.")
+          updateInstructions("You did it! The chairs are sorted."
+        +"</br>Click 'Next Round' to swap positions.")
       }
     }
   }
@@ -406,11 +406,11 @@ function swap(param) {
     if (solved) {
       updateInstructions(player1Name, key=true);
       if (secondRound) {
-        updateInstructions("Chairs in clockwise sorted order!!"+
-        "</br>Press 'Results'.")
+          updateInstructions("You did it! The chairs are sorted."+
+        "</br>Click 'Results' to see who won!")
       } else {
-        updateInstructions("Chairs in clockwise sorted order!!"
-        +"</br>Press 'Next Round' to swap positions.")
+          updateInstructions("You did it! The chairs are sorted."
+        +"</br>Click 'Next Round' to swap positions.")
       }
     }
   }
@@ -791,13 +791,15 @@ function nextRound() {
   } else {
     document.getElementById('next-round-button').classList.add('d-none');
     if (player1Score < player2Score) {
-      document.getElementById('info-board').innerHTML = player1Name + " wins!!. " + player1Name + 
-      " scored " + player1Score + " as compared to " + player2Name + " who scored " + player2Score;
+        document.getElementById('info-board').innerHTML = "Congrats " + player1Name + ", you win! " +
+            "</br>" + player1Name + "'s Score: " + player1Score +
+                "</br>" + player2Name + "'s Score: " + player2Score;
     } else if (player1Score > player2Score) {
-      document.getElementById('info-board').innerHTML = player2Name + " wins!!. " + player2Name + 
-      " scored " + player2Score + " as compared to " + player1Name + " who scored " + player1Score;
+        document.getElementById('info-board').innerHTML = "Congrats " + player2Name + ", you win! " +
+            "</br>" + player2Name + "s Score: " + player2Score +
+            "</br>" + player1Name + "s Score: " + player1Score;
     } else {
-      document.getElementById('info-board').innerHTML = " Tie :(";
+      document.getElementById('info-board').innerHTML = " Looks like it was a tie. Play again?";
     }
     var newGameContainer = document.createElement("div");
     newGameContainer.id = "new-game-button";
