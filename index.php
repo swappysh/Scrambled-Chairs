@@ -18,7 +18,7 @@ $instruction = <<<EOD
 <h2> Rules: </h2>
     <p> - The scrambler goes first and moves chairs around based on the permitted distances. When done, the scrambler clicks on Start.</p>
     <p> - It then becomes the arranger's turn where they can swap chairs at the permitted distances with the empty chair.</p>
-    <p> - The round goes on until the arranger makes the chairs alphabetical in the clockwise direction </p>
+    <p> - The round goes on until the arranger makes the chairs alphabetical in the clockwise direction without gaps.</p>
     <p> - In the next round, the players swap roles and play with the same rules.</p>
     <p> - The player who arranges the chairs in fewer moves wins.</p>
 </p>
