@@ -12,16 +12,16 @@ $instruction = <<<EOD
 <p> <strong> Scrambler: </strong> Scramble the chairs to make it hard for the arranger to win</p>
 
 <h2> Settings: </h2>
-    <p> <strong> Distances: </strong> In a move, a chair at these distances from the empty space (clockwise or counterclockwise) can be moved to the empty space.</p>
+    <p> <strong> Distances: </strong> Only chairs at these distances from the empty chair can be swapped</p>
     <p> <strong> Chair Count: </strong> The number of chairs around the table </p>
     <p> <strong> Scramble Count: </strong> The number of times the scrambler can swap chairs during the game</p>
 
 <h2> Rules: </h2>
     <p> - The scrambler goes first and moves chairs around based on the permitted distances. When done, the scrambler clicks on Start.</p>
-    <p> - Each player will then make moves starting with the arranger. </p>
-    <p> - On each turn of the scrambler, the scrambler can either swap any two green chairs or pass</p>
+    <p> - It then becomes the arranger's turn where they can swap chairs at the permitted distances with the empty chair.</p>
     <p> - The round goes on until the arranger makes the chairs alphabetical in the clockwise direction </p>
-    <p> - In the next round, the players swap roles and play with the same rules</p>
+    <p> - In the next round, the players swap roles and play with the same rules.</p>
+    <p> - The player who arranges the chairs in fewer moves wins.</p>
 </p>
 
 
