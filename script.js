@@ -18,11 +18,7 @@ function setBoard(N) {
     values.push(String.fromCharCode(65+index));
   }
 
-  // Random init
-  // values = values
-  //   .map(value => ({ value, sort: Math.random() }))
-  //   .sort((a, b) => a.sort - b.sort)
-  //   .map(({ value }) => value);
+
   all_poss_set = gen_all_swaps(values, k);
   all_possible = Array.from(all_poss_set);
   if (no_of_players == 2) {
@@ -53,21 +49,6 @@ function setBoard(N) {
     startBtn = document.getElementById('start-button');
     startBtn.classList.remove('d-none');
     move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
-
-    // moves = new Set();
-    // for(let key of move_map[0].keys()) {
-    //     moves.add(key)
-    // }
-
-    // console.log("moves", moves)
-    
-    // for (node of current_state(true, true)) {
-    //   if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
-    //     node.classList.add('valid-circle');
-    //   } else {
-    //     node.classList.remove('active-circle');
-    //   }
-    // }
   }
 }
 
@@ -226,91 +207,14 @@ function player2Move(param) {
   passButton = document.getElementById('pass-button');
   passButton.classList.add('d-none');
   d--;
-  document.getElementById(scrambleLeftLabel).childNodes[1].innerHTML = d;
+  //document.getElementById(scrambleLeftLabel).childNodes[1].innerHTML = d;
 
-  solved = consecutive(current_state());
+  solved = consecutive(current_state(true));
   if (solved) {
     declareWinner();
   }
   return true;
 }
-
-// function settingUpBoard(param) {
-//   if (!document.getElementById(param).classList.contains('valid-circle')) {
-//     return;
-//   }
-
-//   if (var1 == null) {
-//     var1 = document.getElementById(param);
-//     var1.classList.add('selected-circle');
-
-//     move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
-//     if (var1.children.length == 0) {
-//       moves = move_map[0].get('_')
-//     } else {
-//       moves = move_map[0].get(var1.childNodes[0].innerHTML)
-//     }
-
-//     for (node of current_state(true, true)) {
-//       if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
-//         node.classList.add('valid-circle');
-//       } else {
-//         node.classList.remove('active-circle');
-//       }
-//     }
-//     return;
-//   }
-
-//   if (document.getElementById(param) == var1) {
-//     var1.classList.remove('selected-circle');
-//     var1 = null;
-//     move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
-//     moves = new Set();
-//     for(let key of move_map[0].keys()) {
-//         moves.add(key)
-//     }
-    
-//     for (node of current_state(true, true)) {
-//       if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
-//         node.classList.add('valid-circle');
-//         node.classList.add('active-circle');
-//       } else {
-//         node.classList.remove('active-circle');
-//       }
-//     }
-//     return
-//   }
-
-//   var var2 = document.getElementById(param);
-//   if (var1.children.length == 0) {
-//     var1.appendChild(var2.childNodes[0]);
-//     var2.innerHTML = "";
-//   } else if (var2.children.length == 0) {
-//     var2.appendChild(var1.childNodes[0]);
-//     var1.innerHTML = "";
-//   } else {
-//     temp = var1.childNodes[0]
-//     var1.removeChild(temp)
-//     var1.appendChild(var2.childNodes[0])
-//     var2.appendChild(temp)
-//   }
-//   var1.classList.remove('selected-circle');
-//   var1 = null;
-  
-//   move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), Number(k))
-//   moves = new Set();
-//   for(let key of move_map[0].keys()) {
-//       moves.add(key)
-//   }
-  
-//   for (node of current_state(true, true)) {
-//     if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
-//       node.classList.add('valid-circle', 'active-circle');
-//     } else {
-//       node.classList.remove('active-circle');
-//     }
-//   }
-// }
 
 function isInValidSwap(id1, id2) {
   firstCheck = Math.abs(id1 - id2) != k[0] && N - Math.abs(id1 - id2) != k[0]
@@ -472,7 +376,7 @@ function change_turn() {
 }
 
 function consecutive(arr){
-  // console.log(arr);
+  console.log(arr);
   let second_index;
   var sign_changed_once = false;
   for(let first_index = 0; first_index < arr.length - 1; first_index++){
@@ -535,12 +439,13 @@ function newGame(){
       N = Number(chairCount.value);
     }
 
-    distruptionCount = document.getElementById('scramble-count');
-    if (!isEmpty(distruptionCount.value)) { 
+     //for scrambling mode
+    //distruptionCount = document.getElementById('scramble-count');
+    //if (!isEmpty(distruptionCount.value)) { 
       // console.log(distruptionCount.value);
-      d = Number(distruptionCount.value);
-      scrambleCount = d;
-    }
+      //d = Number(distruptionCount.value);
+      //scrambleCount = d;
+    //}
     
     // console.log("New Game Clicked")
     // New layout of game
@@ -565,11 +470,11 @@ function gameInfo() {
   nameDiv = document.getElementById('player1-name');
   infoBoard.insertBefore(get_info_row(instructionLabel, "<b>" + "Set up the game by scrambling the chairs" + "</b>", player2Name + "'s Turn:"), nameDiv);
   infoBoard.insertBefore(get_info_row(movesLabel, 0), nameDiv);
-  infoBoard.insertBefore(get_info_row(scrambleLeftLabel, d), nameDiv);
+  //infoBoard.insertBefore(get_info_row(scrambleLeftLabel, d), nameDiv);
   infoBoard.insertBefore(get_info_row(distanceLabel, k[0] + ", " + k[1]), nameDiv);
-  infoBoard.insertBefore(get_info_row(player1Name + " " + scoreLabel, player1Score), nameDiv);
+  infoBoard.insertBefore(get_info_row(player1Name + "'s " + scoreLabel, player1Score), nameDiv);
   if (no_of_players == 2) {
-    infoBoard.insertBefore(get_info_row(player2Name + " " + scoreLabel, player2Score), nameDiv);
+    infoBoard.insertBefore(get_info_row(player2Name + "'s " + scoreLabel, player2Score), nameDiv);
     name2Div = document.getElementById('player2-name');
     name2Div.innerHTML = "<p id='player2-name-value'>" + player2Name + " waiting </p>";
   }
@@ -577,7 +482,7 @@ function gameInfo() {
 }
 
 function updateScore(player, score) {
-  document.getElementById(player + " " + scoreLabel).childNodes[1].innerHTML = score;
+  document.getElementById(player + "'s " + scoreLabel).childNodes[1].innerHTML = score;
 }
 
 function updateInstructions(update, key=false) {
@@ -617,7 +522,7 @@ function getInitGameInfoHTML() {
   var input1 = document.createElement("input");
   input1.setAttribute("type", "text");
   input1.setAttribute("class", "form-control");
-  input1.setAttribute("placeholder", "Bread");
+  input1.setAttribute("placeholder", "Alice");
   input1.id = "player-1";
   player1NameDiv.appendChild(input1);
 
@@ -653,7 +558,7 @@ function getInitGameInfoHTML() {
   var input2_width2 = document.createElement("input");
   input2_width2.setAttribute("type", "text");
   input2_width2.setAttribute("class", "form-control");
-  input2_width2.setAttribute("placeholder", "0");
+  input2_width2.setAttribute("placeholder", "3");
   input2_width2.id = "swap-width2";
   widthCol2.appendChild(input2_width2);
   swapWidthContainer.appendChild(widthCol2);
@@ -671,26 +576,26 @@ function getInitGameInfoHTML() {
   var input3 = document.createElement("input");
   input3.setAttribute("type", "text");
   input3.setAttribute("class", "form-control");
-  input3.setAttribute("placeholder", "5");
+  input3.setAttribute("placeholder", "6");
   input3.id = "chair-count";
   chairContainer.appendChild(input3);
 
-  // Number of scramble
-  var scrambleContainer = document.createElement("div");
-  scrambleContainer.id = "scramble-container";
-  scrambleContainer.className = "form-group";
-  
-  var label5 = document.createElement("label");
-  label5.setAttribute("for", "scramble-count");
-  label5.innerHTML = "Scramble Count ";
-  scrambleContainer.appendChild(label5);
+    // Number of scramble
+    var scrambleContainer = document.createElement("div");
+    scrambleContainer.id = "scramble-container";
+    scrambleContainer.className = "form-group";
 
-  var input5 = document.createElement("input");
-  input5.setAttribute("type", "text");
-  input5.setAttribute("class", "form-control");
-  input5.setAttribute("placeholder", "3");
-  input5.id = "scramble-count";
-  scrambleContainer.appendChild(input5);
+    var label5 = document.createElement("label");
+    label5.setAttribute("for", "scramble-count");
+    label5.innerHTML = "Scramble Count ";
+    //scrambleContainer.appendChild(label5);
+
+    var input5 = document.createElement("input");
+    input5.setAttribute("type", "text");
+    input5.setAttribute("class", "form-control");
+    input5.setAttribute("placeholder", "3");
+    input5.id = "scramble-count";
+    //scrambleContainer.appendChild(input5);
 
   // Pass button
   var passButtonContainer = document.createElement("div");
@@ -736,7 +641,9 @@ function getInitGameInfoHTML() {
   newGame.innerHTML = "New game";
   newGameContainer.appendChild(newGame);
 
-  info_list = [newGameContainer, startGameContainer, nextRoundContainer, passButtonContainer, scrambleContainer, chairContainer, swapWidthContainer];
+
+
+    info_list = [newGameContainer, startGameContainer, nextRoundContainer, passButtonContainer, chairContainer, swapWidthContainer];
   // player 2
   if (no_of_players == 2) {
     var player2NameDiv = document.createElement("div");
@@ -751,7 +658,7 @@ function getInitGameInfoHTML() {
     var input4 = document.createElement("input");
     input4.setAttribute("type", "text");
     input4.setAttribute("class", "form-control");
-    input4.setAttribute("placeholder", "Butter");
+    input4.setAttribute("placeholder", "Bob");
     input4.id = "player-2";
     player2NameDiv.appendChild(input4);
     info_list.push(player2NameDiv);
@@ -780,7 +687,7 @@ function nextRound() {
     counter=0;
     document.getElementById('next-round-button').classList.add('d-none');
     document.getElementById('next-round-button').childNodes[0].innerHTML = "Results"
-    document.getElementById(scrambleLeftLabel).childNodes[1].innerHTML = d;
+    //document.getElementById(scrambleLeftLabel).childNodes[1].innerHTML = d;
     document.getElementById(movesLabel).childNodes[1].innerHTML = counter;
 
     updateScore(player2Name, player2Score)
@@ -796,8 +703,8 @@ function nextRound() {
                 "</br>" + player2Name + "'s Score: " + player2Score;
     } else if (player1Score > player2Score) {
         document.getElementById('info-board').innerHTML = "Congrats " + player2Name + ", you win! " +
-            "</br>" + player2Name + "s Score: " + player2Score +
-            "</br>" + player1Name + "s Score: " + player1Score;
+            "</br>" + player2Name + "'s Score: " + player2Score +
+            "</br>" + player1Name + "'s Score: " + player1Score;
     } else {
       document.getElementById('info-board').innerHTML = " Looks like it was a tie. Play again?";
     }
@@ -819,9 +726,9 @@ function isEmpty(str) {
 }
 
 function InitInfoBoard() {
-  var1 = null, k = structuredClone(defaultK), solved = false, d = 3, player1Score = 0, player2Score = 0;
-  N = 5, no_of_players=2, player1Turn = true;
-  player1Name = "Bread", player2Name = "Butter";
+  var1 = null, k = structuredClone(defaultK), solved = false, player1Score = 0, player2Score = 0;
+  N = 6, no_of_players=2, player1Turn = true;
+  player1Name = "Alice", player2Name = "Bob";
   all_poss_set=null;
   game_started=true;
   counter=0;
@@ -1026,7 +933,7 @@ function getUnion(setA, setB) {
 }
 
 // Default script runs
-const defaultK = [2, 0];
+const defaultK = [2, 3];
 const scrambleLeftLabel = "Scrambles Left: ";
 const movesLabel = "Moves: ", instructionLabel = "Instructions: ";
 const scoreLabel = "Score: ";
@@ -1034,8 +941,8 @@ const distanceLabel = "Distance: ";
 
 var var1, k = structuredClone(defaultK), solved = false, scrambleCount = 3;
 var d = 3, player1Score = 0, player2Score = 0, counter=0;
-var N = 5, no_of_players=2, player1Turn = true;
-var player1Name = "Bread", player2Name = "Butter";
+var N = 6, no_of_players=2, player1Turn = true;
+var player1Name = "Alice", player2Name = "Bob";
 var all_poss_set=null;
 var game_started=true;
 var secondRound=false;

@@ -14,7 +14,6 @@ $instruction = <<<EOD
 <h2> Settings: </h2>
     <p> <strong> Distances: </strong> Only chairs at these distances from the empty chair can be swapped</p>
     <p> <strong> Chair Count: </strong> The number of chairs around the table </p>
-    <p> <strong> Scramble Count: </strong> The number of times the scrambler can swap chairs during the game</p>
 
 <h2> Rules: </h2>
     <p> - The scrambler goes first and moves chairs around based on the permitted distances. When done, the scrambler clicks on Start.</p>
