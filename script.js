@@ -114,7 +114,7 @@ function start() {
 // otherwise returns false
 function player1Move(param) {
   if (solved) {
-    return;
+    return false;
   }
 
   if (var1 == null) {
@@ -125,12 +125,11 @@ function player1Move(param) {
   }
 
   var var2 = document.getElementById(param);
-  // console.log(var2, Math.abs(var1.id - var2.id), N-Math.abs(var1.id - var2.id));
 
   if (isInValidSwap(var1.id, var2.id)) {
     var1.classList.remove('selected-circle');
     var1 = null;
-    return;
+    return false;
   }
 
   if (var1.children.length == 0) {
@@ -142,38 +141,16 @@ function player1Move(param) {
   } else {
     var1.classList.remove('selected-circle');
     var1 = null;
-    return
+    return false;
   }
   var1.classList.remove('selected-circle');
   var1 = null;
-  // change_turn();
   
   solved = consecutive(current_state());
   counter++;
   document.getElementById(movesLabel).childNodes[1].innerHTML = counter;
-  change_turn();
   if (solved) {
     declareWinner();
-  } else if (d > 0) {
-    move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
-    moves = new Set();
-    for(let key of move_map[0].keys()) {
-      // console.log(typeof moves)
-        moves.add(key)
-    }
-
-    // console.log("moves", moves)
-    
-    for (node of current_state(true, true)) {
-      if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
-        node.classList.add('valid-circle');
-      } else {
-        node.classList.remove('active-circle');
-      }
-    }
-
-    passButton = document.getElementById('pass-button');
-    passButton.classList.remove('d-none');
   }
   return true;
 }
@@ -376,9 +353,36 @@ function swap(param) {
     settingUpBoard(param)
   } else if (player1Turn) {
     complete_move = player1Move(param)
-    if (complete_move && d > 0) {
-      updateInstructions(player2Name, key=true);
-      updateInstructions("Scramble the green chairs, or pass!")
+
+    if (complete_move) {
+      if (scrambleMode) {
+        change_turn();
+        if (d > 0) {
+          move_map = gen_adversarial_moves(current_state(true), Array.from(all_poss_set), k)
+          moves = new Set();
+          for(let key of move_map[0].keys()) {
+            // console.log(typeof moves)
+              moves.add(key)
+          }
+
+          // console.log("moves", moves)
+          
+          for (node of current_state(true, true)) {
+            if (node.children.length == 0 || moves.has(node.childNodes[0].innerHTML)) {
+              node.classList.add('valid-circle');
+            } else {
+              node.classList.remove('active-circle');
+            }
+          }
+
+          passButton = document.getElementById('pass-button');
+          passButton.classList.remove('d-none');
+
+          // Update instructions
+          updateInstructions(player2Name, key=true);
+          updateInstructions("Scramble the green chairs, or pass!")
+        }
+      }
     }
     
     if (solved) {
@@ -391,7 +395,8 @@ function swap(param) {
         +"</br>Press 'Next Round' to swap positions.")
       }
     }
-  } else {
+  }
+   else {
     complete_move = player2Move(param)
     if (complete_move) {
       updateInstructions(player1Name, key=true);
@@ -1032,5 +1037,6 @@ var player1Name = "Bread", player2Name = "Butter";
 var all_poss_set=null;
 var game_started=true;
 var secondRound=false;
+var scrambleMode=false;
 
 InitInfoBoard();
